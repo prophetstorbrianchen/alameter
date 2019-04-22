@@ -11,6 +11,7 @@ For more details, please refer to https://github.com/containers-ai/alameter
 ```console
 $ git clone https://github.com/prophetstorbrianchen/alameter.git
 $ cd ./alameter
+$ cd ./helm
 $ sh alameter_install.sh
 ```
 
