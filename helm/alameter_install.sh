@@ -11,6 +11,8 @@ do
 
 		git clone https://github.com/containers-ai/alameda
 
+    cp -r $pwd/alameda/example/samples .
+
 		cp -r $pwd/alameda/helm/prometheus-operator .
 
 		cp -r $pwd/alameda/helm/influxdb .
