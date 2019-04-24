@@ -46,7 +46,7 @@ if [ $tiller_number == 0 ]; then
 	$pwd/linux-amd64/helm init --upgrade
         $pwd/linux-amd64/helm init
 	default_path=$pwd/linux-amd64/helm
-	sleep 5
+	sleep 10
 else
 	echo "Helm Tiller had been installed"
 fi
