@@ -9,9 +9,8 @@ For more details, please refer to https://github.com/containers-ai/alameter
 ## TL;DR;
 
 ```console
-$ git clone https://github.com/prophetstorbrianchen/alameter.git
-$ cd ./alameter
-$ cd ./helm
+$ git clone https://github.com/prophetstorbrianchen/alameter.git /tmp/alameter
+$ wget https://raw.githubusercontent.com/prophetstorbrianchen/alameter/master/helm/alameter_install.sh
 $ sh alameter_install.sh
 ```
 
