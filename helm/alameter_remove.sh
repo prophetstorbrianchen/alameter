@@ -1,6 +1,7 @@
 #!/bin/bash
 pwd=`pwd`
-default_path=$pwd/linux-amd64/helm
+alameter_pwd=/tmp/alameter/helm
+default_path=$alameter_pwd/linux-amd64/helm
 
 echo "====Alameda Remove===="
 $default_path delete alameda --purge
