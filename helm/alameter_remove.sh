@@ -20,3 +20,5 @@ $default_path delete alameter-influxdb --purge
 
 echo "====Check Helm List===="
 $default_path list
+
+kubectl delete ns alameda
