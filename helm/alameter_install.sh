@@ -60,6 +60,10 @@ $default_path install --name alameda --namespace alameda ./alameda --set image.r
 
 $default_path install --name grafana --namespace monitoring ./grafana/
 
+echo "========For old datahub name========"
+sleep 5
+for i in `kubectl get pod -n alameda | grep datahub | awk '{print $1}'`;do kubectl expose pod $i --name datahub --type NodePort -n alameda --port 50050;done
+
 echo "========Install Alameter========"
 $default_path install ./alameter-influxdb --name alameter-influxdb --namespace alameter
 
