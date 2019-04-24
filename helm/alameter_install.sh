@@ -44,6 +44,7 @@ if [ $tiller_number == 0 ]; then
 	echo "Need to install Helm"
 #        echo "$pwd/linux-amd64/helm"
 	$pwd/linux-amd64/helm init --upgrade
+	sleep 5
         $pwd/linux-amd64/helm init
 	default_path=$pwd/linux-amd64/helm
 	sleep 10
