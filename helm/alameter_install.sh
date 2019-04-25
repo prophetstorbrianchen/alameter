@@ -40,9 +40,11 @@ done
 
 echo "========Check Helm Tiller========"
 tiller_number=`kubectl get pod -n kube-system | grep "tiller-deploy" | wc -l`
+helm_client_version=`$default_path version | grep Client |awk '{print $2}' | sed 's/&version.Version{SemVer://g' | sed 's/,//g'`
+helm_server_version=`$default_path version | grep Server |awk '{print $2}' | sed 's/&version.Version{SemVer://g' | sed 's/,//g'`
 #echo $tiller_number
-if [ $tiller_number == 0 ]; then
-        echo "Need to install Helm"
+if [ $tiller_number == 0 ] || [ $helm_client_version != $helm_server_version ]; then
+        echo "Need to install or upgrade Helm"
 #        echo "$pwd/linux-amd64/helm"
         $alameter_pwd/linux-amd64/helm init --upgrade
         sleep 10
