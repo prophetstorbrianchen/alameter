@@ -1,5 +1,4 @@
 #!/bin/bash
-pwd=`pwd`
 alameter_pwd=/tmp/alameter/helm
 default_path=$alameter_pwd/linux-amd64/helm
 
@@ -8,21 +7,25 @@ do
         read -p "First Install?(y or n): " answer
 
         if [ $answer == "y" ] || [ $answer == "Y" ]; then
+                echo "========Download Alameter========"
+
+                git clone https://github.com/prophetstorbrianchen/alameter.git /tmp/alameter
+
                 echo "========Download Alameda========"
 
-                git clone https://github.com/containers-ai/alameda
+                git clone https://github.com/containers-ai/alameda /tmp/alameda
 
-                cp -r $pwd/alameda/example/samples $alameter_pwd
+                cp -r /tmp/alameda/example/samples $alameter_pwd
 
-                cp -r $pwd/alameda/helm/prometheus-operator $alameter_pwd
+                cp -r /tmp/alameda/helm/prometheus-operator $alameter_pwd
 
-                cp -r $pwd/alameda/helm/influxdb $alameter_pwd
+                cp -r /tmp/alameda/helm/influxdb $alameter_pwd
 
-                cp -r $pwd/alameda/helm/grafana $alameter_pwd
+                cp -r /tmp/alameda/helm/grafana $alameter_pwd
 
-                cp -r $pwd/alameda/helm/alameda $alameter_pwd/alameda
+                cp -r /tmp/alameda/helm/alameda $alameter_pwd/alameda
 
-                rm -rf $pwd/alameda
+                rm -rf /tmp/alameda
 
                 #mv $pwd/temp_alameda $pwd/alameda
 
@@ -67,7 +70,7 @@ $default_path install --name grafana --namespace monitoring $alameter_pwd/grafan
 echo "========For old datahub name========"
 sleep 5
 
-for i in `kubectl get pod -n alameda | grep datahub | awk '{print $1}'`;do kubectl expose pod $i --name datahub --type NodePort -n alameda --port 50050;done
+#for i in `kubectl get pod -n alameda | grep datahub | awk '{print $1}'`;do kubectl expose pod $i --name datahub --type NodePort -n alameda --port 50050;done
 
 echo "========Install Alameter========"
 $default_path install $alameter_pwd/alameter-influxdb --name alameter-influxdb --namespace alameter
