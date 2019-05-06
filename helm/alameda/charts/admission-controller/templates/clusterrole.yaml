@@ -1,0 +1,57 @@
+{{- if .Values.global.rbacEnable }}
+{{- if .Capabilities.APIVersions.Has "rbac.authorization.k8s.io/v1beta1" }}
+apiVersion: rbac.authorization.k8s.io/v1beta1
+{{- else if .Capabilities.APIVersions.Has "rbac.authorization.k8s.io/v1alpha1" }}
+apiVersion: rbac.authorization.k8s.io/v1alpha1
+{{- else }}
+apiVersion: rbac.authorization.k8s.io/v1
+{{- end }}
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "admission-controller.name" . }}
+    helm.sh/chart: {{ include "admission-controller.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ include "admission-controller.fullname" . }}
+rules:
+- apiGroups:
+    - "admissionregistration.k8s.io"
+  resources:
+    - mutatingwebhookconfigurations
+  verbs:
+    - get
+    - create
+    - update
+- apiGroups:
+    - ""
+  resources:
+    - pods
+  verbs:
+    - get
+    - list
+    - patch
+- apiGroups:
+    - apps
+  resources:
+    - replicasets
+    - deployments
+  verbs:
+    - get
+    - list
+- apiGroups:
+    - ""
+  resources:
+    - replicationcontrollers
+  verbs:
+    - get
+    - list
+- apiGroups:
+    - apps.openshift.io
+  resources:
+    - deploymentconfigs
+  verbs:
+    - get
+    - list
+{{- end }}
+

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+#  name: {{ include "admission-controller.fullname" . }}
+# webhook name is hardcoded to admission-controller
+  name: admission-controller
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "admission-controller.name" . }}
+    helm.sh/chart: {{ include "admission-controller.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  ports:
+    - port: 443
+      targetPort: 8000
+  selector:
+    app.kubernetes.io/name: {{ include "admission-controller.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

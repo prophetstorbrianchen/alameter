@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "datahub.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: alameda
+    component: {{ .Values.global.component.datahub.name }}
+    app.kubernetes.io/name: {{ include "datahub.name" . }}
+    helm.sh/chart: {{ include "datahub.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.global.component.datahub.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "datahub.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "datahub.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ALAMEDA_DATAHUB_INFLUXDB_ADDRESS
+              value: "{{ .Values.global.component.datahub.influxdbConfig.scheme }}://{{ .Values.global.component.datahub.influxdbConfig.url }}:{{ .Values.global.component.datahub.influxdbConfig.port }}"
+            - name: ALAMEDA_DATAHUB_INFLUXDB_USERNAME
+              value: "{{ .Values.global.component.datahub.influxdbConfig.username }}"
+            - name: ALAMEDA_DATAHUB_INFLUXDB_PASSWORD
+              value: "{{ .Values.global.component.datahub.influxdbConfig.password }}"
+            - name: ALAMEDA_DATAHUB_PROMETHEUS_TLS_CONFIG_INSECURE_SKIP_VERIFY
+              value: "{{ .Values.global.component.datahub.prometheusConfig.insecureSkipVerify }}"
+            - name: ALAMEDA_DATAHUB_PROMETHEUS_BEARER_TOKEN_FILE
+              value: "{{ .Values.global.component.datahub.prometheusConfig.bearerTokenFile }}"
+            - name: ALAMEDA_DATAHUB_PROMETHEUS_URL
+              value: "{{ .Values.global.component.datahub.prometheusConfig.scheme }}://{{ .Values.global.component.datahub.prometheusConfig.url }}:{{ .Values.global.component.datahub.prometheusConfig.port }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+    {{- if .Values.image.accessToken }}
+      imagePullSecrets:
+        - name: {{ include "datahub.fullname" . }}-imagepull
+    {{- end }}
+    {{- if .Values.global.rbacEnable }}
+      serviceAccountName: {{ include "datahub.fullname" . }}
+    {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

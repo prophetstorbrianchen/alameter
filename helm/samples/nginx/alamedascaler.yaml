@@ -1,0 +1,11 @@
+apiVersion: autoscaling.containers.ai/v1alpha1
+kind: AlamedaScaler
+metadata:
+  name: alameda
+  namespace: alameda
+spec:
+  policy: stable
+  enable: true
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: alameda

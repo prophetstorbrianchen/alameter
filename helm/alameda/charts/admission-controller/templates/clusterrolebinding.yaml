@@ -1,0 +1,25 @@
+{{- if .Values.global.rbacEnable }}
+{{- if .Capabilities.APIVersions.Has "rbac.authorization.k8s.io/v1beta1" }}
+apiVersion: rbac.authorization.k8s.io/v1beta1
+{{- else if .Capabilities.APIVersions.Has "rbac.authorization.k8s.io/v1alpha1" }}
+apiVersion: rbac.authorization.k8s.io/v1alpha1
+{{- else }}
+apiVersion: rbac.authorization.k8s.io/v1
+{{- end }}
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "admission-controller.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "admission-controller.name" . }}
+    helm.sh/chart: {{ include "admission-controller.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "admission-controller.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "admission-controller.fullname" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}

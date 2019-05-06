@@ -1,0 +1,69 @@
+# Default values for alameda.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: "alameda-operator"
+fullnameOverride: "alameda-operator"
+
+global:
+  ## If true, create & use RBAC resources
+  ##
+  rbacEnable: true
+  executionEnable: false
+
+  component:
+    operator:
+      name: "alameda-operator"
+      replicaCount: 1
+    alamedaai:
+      name: "alameda-ai"
+      replicaCount: 1
+    datahub:
+      name: "alameda-datahub"
+      replicaCount: 1
+      service:
+        type: ClusterIP
+        port: 50050
+        name: grpc
+      prometheusConfig:
+        scheme: "http"
+        url: "prometheus-prometheus-oper-prometheus.monitoring"
+        port: 9090
+        insecureSkipVerify: true
+        bearerTokenFile: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+      influxdbConfig:
+        scheme: "http"
+        url: "influxdb-influxdb.monitoring"
+        port: 8086
+        username: "alameda"
+        password: "alameda"
+    evictioner:
+      name: "alameda-evictioner"
+      replicaCount: 1
+    admission:
+      name: "admission-controller"
+      replicaCount: 1
+
+image:
+  repository: operator
+  tag: latest
+  pullPolicy: IfNotPresent
+  #  accessToken: ""
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
