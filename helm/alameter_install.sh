@@ -13,19 +13,19 @@ do
 
                 echo "========Download Alameda========"
 
-                git clone https://github.com/containers-ai/alameda /tmp/alameda
+                #git clone https://github.com/containers-ai/alameda /tmp/alameda
 
-                cp -r /tmp/alameda/example/samples $alameter_pwd
+                #cp -r /tmp/alameda/example/samples $alameter_pwd
 
-                cp -r /tmp/alameda/helm/prometheus-operator $alameter_pwd
+                #cp -r /tmp/alameda/helm/prometheus-operator $alameter_pwd
 
-                cp -r /tmp/alameda/helm/influxdb $alameter_pwd
+                #cp -r /tmp/alameda/helm/influxdb $alameter_pwd
 
-                cp -r /tmp/alameda/helm/grafana $alameter_pwd
+                #cp -r /tmp/alameda/helm/grafana $alameter_pwd
 
-                cp -r /tmp/alameda/helm/alameda $alameter_pwd/alameda
+                #cp -r /tmp/alameda/helm/alameda $alameter_pwd/alameda
 
-                rm -rf /tmp/alameda
+                #rm -rf /tmp/alameda
 
                 #mv $pwd/temp_alameda $pwd/alameda
 
