@@ -8,4 +8,4 @@ spec:
   enable: true
   selector:
     matchLabels:
-      app.kubernetes.io/instance: alameda
+      app: alameda
