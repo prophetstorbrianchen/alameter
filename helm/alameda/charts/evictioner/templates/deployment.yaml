@@ -6,21 +6,17 @@ metadata:
   labels:
     app: alameda
     component: {{ .Values.global.component.evictioner.name }}
-    app.kubernetes.io/name: {{ include "evictioner.name" . }}
-    helm.sh/chart: {{ include "evictioner.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.global.component.evictioner.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "evictioner.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      app: alameda
+      component: {{ .Values.global.component.evictioner.name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "evictioner.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        app: alameda
+        component: {{ .Values.global.component.evictioner.name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -35,6 +31,22 @@ spec:
 #              value: "debug"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          readinessProbe:
+            exec:
+              command:
+              - /usr/local/bin/evictioner
+              - probe
+              - --type=readiness
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+              - /usr/local/bin/evictioner
+              - probe
+              - --type=liveness
+            initialDelaySeconds: 5
+            periodSeconds: 5
     {{- if .Values.image.accessToken }}
       imagePullSecrets:
         - name: {{ include "evictioner.fullname" . }}-imagepull

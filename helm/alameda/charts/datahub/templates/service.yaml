@@ -4,10 +4,8 @@ metadata:
   name: {{ include "datahub.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ include "datahub.name" . }}
-    helm.sh/chart: {{ include "datahub.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: alameda
+    component: {{ .Values.global.component.datahub.name }}
 spec:
   type: {{ .Values.global.component.datahub.service.type }}
   ports:
@@ -15,5 +13,5 @@ spec:
       protocol: TCP
       name: {{ .Values.global.component.datahub.service.name }}
   selector:
-    app.kubernetes.io/name: {{ include "datahub.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app: alameda
+    component: {{ .Values.global.component.datahub.name }}

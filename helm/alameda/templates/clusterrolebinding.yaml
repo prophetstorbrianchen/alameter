@@ -10,10 +10,8 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ include "alameda.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "alameda.name" . }}
-    helm.sh/chart: {{ include "alameda.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: alameda
+    component: {{ .Values.global.component.operator.name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

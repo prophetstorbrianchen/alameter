@@ -6,14 +6,12 @@ metadata:
   name: admission-controller
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: {{ include "admission-controller.name" . }}
-    helm.sh/chart: {{ include "admission-controller.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: alameda
+    component: {{ .Values.global.component.admission.name }}
 spec:
   ports:
     - port: 443
       targetPort: 8000
   selector:
-    app.kubernetes.io/name: {{ include "admission-controller.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app: alameda
+    component: {{ .Values.global.component.admission.name }}

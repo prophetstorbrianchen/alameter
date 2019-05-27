@@ -33,7 +33,7 @@ global:
         bearerTokenFile: "/var/run/secrets/kubernetes.io/serviceaccount/token"
       influxdbConfig:
         scheme: "http"
-        url: "influxdb-influxdb.monitoring"
+        url: "alameda-influxdb"
         port: 8086
         username: "alameda"
         password: "alameda"

@@ -6,27 +6,31 @@ metadata:
   labels:
     app: alameda
     component: {{ .Values.global.component.operator.name }}
-    app.kubernetes.io/name: {{ include "alameda.name" . }}
-    helm.sh/chart: {{ include "alameda.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.global.component.operator.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "alameda.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      app: alameda
+      component: {{ .Values.global.component.operator.name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "alameda.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        app: alameda
+        component: {{ .Values.global.component.operator.name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: NAMESPACE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace   
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name 
             - name: ALAMEDA_OPERATOR_DATAHUB_ADDRESS
               value: "{{ .Values.global.component.datahub.name }}.{{ .Release.Namespace }}:{{ .Values.global.component.datahub.service.port }}"
           resources:
@@ -35,6 +39,22 @@ spec:
           - name: podinfo
             mountPath: /etc/podinfo
             readOnly: false
+          readinessProbe:
+            exec:
+              command:
+              - /usr/local/bin/manager
+              - --readiness-probe
+            initialDelaySeconds: 5
+            failureThreshold: 20
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+              - /usr/local/bin/manager
+              - --liveness-probe
+            initialDelaySeconds: 5
+            failureThreshold: 20
+            periodSeconds: 5
       volumes:
       - name: podinfo
         downwardAPI:

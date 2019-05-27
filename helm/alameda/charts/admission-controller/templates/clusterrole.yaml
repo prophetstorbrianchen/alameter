@@ -9,10 +9,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/name: {{ include "admission-controller.name" . }}
-    helm.sh/chart: {{ include "admission-controller.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: alameda
+    component: {{ .Values.global.component.admission.name }}
   name: {{ include "admission-controller.fullname" . }}
 rules:
 - apiGroups:
@@ -23,6 +21,7 @@ rules:
     - get
     - create
     - update
+    - delete
 - apiGroups:
     - ""
   resources:
@@ -32,6 +31,7 @@ rules:
     - list
     - patch
 - apiGroups:
+    - extensions
     - apps
   resources:
     - replicasets
@@ -40,6 +40,7 @@ rules:
     - get
     - list
 - apiGroups:
+    - extensions
     - ""
   resources:
     - replicationcontrollers
