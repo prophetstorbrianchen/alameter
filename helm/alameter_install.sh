@@ -59,13 +59,13 @@ else
 fi
 
 echo "========Install Alameda========"
-$default_path install stable/influxdb --version 1.1.3 --name influxdb --namespace alameda
+$default_path install stable/influxdb --version 1.1.3 --name alameda-influxdb --namespace alameda
 
 $default_path install stable/prometheus-operator --version 5.5.1 --name prometheus --namespace monitoring
 
 $default_path install --name alameda --namespace alameda $alameter_pwd/alameda --set image.repository=quay.io/prophetstor/alameda-operator-rhel --set image.tag=v0.3.10 --set image.pullPolicy=Always --set evictioner.image.repository=quay.io/prophetstor/alameda-evictioner-rhel --set evictioner.image.tag=v0.3.10 --set image.pullPolicy=Always --set admission-controller.image.repository=quay.io/prophetstor/alameda-admission-rhel --set admission-controller.image.tag=v0.3.10 --set image.pullPolicy=Always --set datahub.image.repository=quay.io/prophetstor/alameda-datahub-rhel --set datahub.image.tag=v0.3.10 --set datahub.image.pullPolicy=Always --set alameda-ai.image.repository=quay.io/prophetstor/alameda-ai --set alameda-ai.image.tag=v0.3.10 --set alameda-ai.image.pullPolicy=Always
 
-$default_path install --name grafana --namespace alameda $alameter_pwd/grafana
+$default_path install --name alameda-grafana --namespace alameda $alameter_pwd/grafana
 
 echo "========For old datahub name========"
 sleep 5
