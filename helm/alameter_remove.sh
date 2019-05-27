@@ -6,9 +6,9 @@ default_path=$alameter_pwd/linux-amd64/helm
 echo "====Alameda Remove===="
 $default_path delete alameda --purge
 
-$default_path delete grafana --purge
+$default_path delete alameda-grafana --purge
 
-$default_path delete influxdb --purge
+$default_path delete alameda-influxdb --purge
 
 $default_path delete prometheus --purge
 
