@@ -217,11 +217,17 @@ dashboardProviders:
 ##
 dashboards:
   alameda:
-    prediction:
-      json: dashboards/prediction.json
-    clusterHealth:
+    prediction-recommendation:
+      json: dashboards/prediction-recommendation.json
+    recommendation-cluster:
+      json: dashboards/recommendation-cluster.json
+    recommendation-namespace:
+      json: dashboards/recommendation-namespace.json
+    recommendation-alamedascaler:
+      json: dashboards/recommendation-alamedascaler.json
+    clusterhealth:
       json: dashboards/clusterhealth.json
-    nodeHealth:
+    nodehealth:
       json: dashboards/nodehealth.json
 #    prometheus-stats:
 #      gnetId: 2

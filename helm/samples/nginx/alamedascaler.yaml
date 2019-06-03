@@ -5,7 +5,9 @@ metadata:
   namespace: alameda
 spec:
   policy: stable
-  enable: true
+  enableexecution: true
+  scalingTools:
+  - vpa
   selector:
     matchLabels:
       app: alameda
