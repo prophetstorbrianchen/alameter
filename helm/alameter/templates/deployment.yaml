@@ -54,10 +54,10 @@ spec:
           #- mountPath: /depot
           #  name: depot
           #resources:
-          #resources:
-          #  requests:
-          #    cpu: 4.0
-          #    memory: "1Gi"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 500Mi
           #  limits:
           #    cpu: 6.0
           #    memory: "2Gi"
