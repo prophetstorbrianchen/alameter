@@ -16,7 +16,7 @@ spec:
         #  kubernetes.io/hostname: "netmnyje67-worker-2"
         containers:
         - name: alameter
-          image: containersai/alameter:latest
+          image: containersai/alameter:v0.2.0
           imagePullPolicy: IfNotPresent
           ports:
           - name: gui-alameter
