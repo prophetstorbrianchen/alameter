@@ -43,14 +43,14 @@ spec:
         #  timeoutSeconds: 10
         #  successThreshold: 1
         #  failureThreshold: 3
-        #resources:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
         #  requests:
         #    cpu: 4.0
         #    memory: "1Gi"
         #    # ephemeral-storage: 8Gi  # skip and avoid umounting volume error
-        #  limits:
-        #    cpu: 6.0
-        #    memory: "2Gi"
         #envFrom:
         #- configMapRef:
         #    name: influxdb-env
