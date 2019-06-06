@@ -17,7 +17,7 @@ spec:
       #  kubernetes.io/hostname: "ip-172-23-1-236.ec2.internal"
       containers:
       - name: influxdb
-        image: containersai/alameter-influxdb:latest
+        image: containersai/alameter-influxdb:v0.2.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8086
