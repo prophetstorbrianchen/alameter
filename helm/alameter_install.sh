@@ -11,24 +11,6 @@ do
 
                 git clone https://github.com/prophetstorbrianchen/alameter.git /tmp/alameter
 
-                echo "========Download Alameda========"
-
-                #git clone https://github.com/containers-ai/alameda /tmp/alameda
-
-                #cp -r /tmp/alameda/example/samples $alameter_pwd
-
-                #cp -r /tmp/alameda/helm/prometheus-operator $alameter_pwd
-
-                #cp -r /tmp/alameda/helm/influxdb $alameter_pwd
-
-                #cp -r /tmp/alameda/helm/grafana $alameter_pwd
-
-                #cp -r /tmp/alameda/helm/alameda $alameter_pwd/alameda
-
-                #rm -rf /tmp/alameda
-
-                #mv $pwd/temp_alameda $pwd/alameda
-
                 echo "========Unzip helm tar.gz========"
 
                 tar -C /tmp/alameter/helm -zxvf /tmp/alameter/helm/helm-v2.13.1-linux-amd64.tar.gz
@@ -59,13 +41,8 @@ else
 fi
 
 echo "========Install Alameda========"
-$default_path install stable/influxdb --version 1.1.3 --name alameda-influxdb --namespace alameda
 
-$default_path install stable/prometheus-operator --version 5.5.1 --name prometheus --namespace monitoring
-
-$default_path install --name alameda --namespace alameda $alameter_pwd/alameda --set image.repository=quay.io/prophetstor/alameda-operator-rhel --set image.tag=v0.3.21 --set image.pullPolicy=Always --set evictioner.image.repository=quay.io/prophetstor/alameda-evictioner-rhel --set evictioner.image.tag=v0.3.21 --set image.pullPolicy=Always --set admission-controller.image.repository=quay.io/prophetstor/alameda-admission-rhel --set admission-controller.image.tag=v0.3.21 --set image.pullPolicy=Always --set datahub.image.repository=quay.io/prophetstor/alameda-datahub-rhel --set datahub.image.tag=v0.3.21 --set datahub.image.pullPolicy=Always --set alameda-ai.image.repository=quay.io/prophetstor/alameda-ai --set alameda-ai.image.tag=v0.3.21 --set alameda-ai.image.pullPolicy=Always
-
-$default_path install --name alameda-grafana --namespace alameda $alameter_pwd/grafana
+python /tmp/alameter/helm/alameda_install.py
 
 echo "========For old datahub name========"
 sleep 5
@@ -79,3 +56,6 @@ $default_path install $alameter_pwd/alameter --name alameter --namespace alamete
 
 echo "========Check the helm list========"
 $default_path list
+
+echo "========Check the pod list========"
+kubectl get pod --all-namespaces
