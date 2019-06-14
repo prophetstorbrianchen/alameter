@@ -1,6 +1,0 @@
-apiVersion: v1
-appVersion: 0.3.0
-description: A Helm chart of Alameda
-kubeVersion: '>= 1.9.0'
-name: alameda
-version: 0.3.0

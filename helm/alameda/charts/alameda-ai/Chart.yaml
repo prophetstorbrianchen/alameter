@@ -1,4 +1,0 @@
-apiVersion: v1
-description: A Helm chart of Alameda alameda-ai component
-name: alameda-ai
-version: 0.3.0

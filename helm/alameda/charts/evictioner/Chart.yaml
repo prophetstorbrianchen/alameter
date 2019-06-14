@@ -1,4 +1,0 @@
-apiVersion: v1
-description: A Helm chart for Alameda evictioner component
-name: evictioner
-version: 0.3.0

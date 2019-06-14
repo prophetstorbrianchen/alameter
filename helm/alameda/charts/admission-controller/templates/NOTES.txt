@@ -1,5 +1,0 @@
-Alameda admission-controller component has been installed. Check its status by running:
-  kubectl --namespace {{ .Release.Namespace }} get pods
-
-This is a component of Alameda. It can NOT run without the rest components of Alameda. Please visit https://github.com/containers-ai/alameda for more details.
-
